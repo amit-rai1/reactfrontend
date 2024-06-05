@@ -1,34 +1,57 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import axios from 'axios';
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+import { Container, Form, Button } from 'react-bootstrap';
 
-const Notes = () => {
-  const [notes, setNotes] = useState([]);
+const CreateNote = () => {
+  const [title, setTitle] = useState('');
+  const [description, setDescription] = useState('');
+  const navigate = useNavigate();
 
-  useEffect(() => {
-    const fetchNotes = async () => {
-      const token = localStorage.getItem('token');
-      const res = await axios.get('/api/notes', {
-        headers: { Authorization: `Bearer ${token}` }
-      });
-      setNotes(res.data);
-    };
-    fetchNotes();
-  }, []);
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      await axios.post('https://backendassign-59wq.onrender.com/api/notes/createNote', { title, description });
+      alert("note added")
+      navigate('/notelist'); // navigate to the home page or any other route
+    } catch (error) {
+      console.error('Error creating note:', error);
+    }
+  };
 
   return (
-    <div>
-      <h2>Notes</h2>
-      <Link to="/create">Create Note</Link>
-      <ul>
-        {notes.map(note => (
-          <li key={note._id}>
-            <Link to={`/notes/${note._id}`}>{note.title}</Link>
-          </li>
-        ))}
-      </ul>
-    </div>
+    <Container className="mt-5">
+      <h2>Create Note</h2>
+      <Form onSubmit={handleSubmit}>
+        <Form.Group className="mb-3" controlId="formTitle">
+          <Form.Label>Title</Form.Label>
+          <Form.Control 
+            type="text" 
+            placeholder="Enter title" 
+            value={title} 
+            onChange={(e) => setTitle(e.target.value)} 
+            required 
+          />
+        </Form.Group>
+
+        <Form.Group className="mb-3" controlId="formDescription">
+          <Form.Label>Description</Form.Label>
+          <Form.Control 
+            as="textarea" 
+            rows={3} 
+            placeholder="Enter description" 
+            value={description} 
+            onChange={(e) => setDescription(e.target.value)} 
+            required 
+          />
+        </Form.Group>
+
+        <Button variant="primary" type="submit">
+          Create
+        </Button>
+      </Form>
+    </Container>
   );
 };
 
-export default Notes;
+export default CreateNote;

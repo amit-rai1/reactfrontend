@@ -3,8 +3,10 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Register from './components/Register';
 import Login from './components/Login';
 import Notes from './components/Notes';
-import NoteDetail from './components/NoteDetail';
+import NoteDetail from './components/NoteList';
 import EditNote from './components/EditNote';
+import CreateNote from './components/Notes';
+import NotesList from './components/NoteList';
 
 function App() {
   return (
@@ -13,9 +15,10 @@ function App() {
       <Route path="/" element={<Register />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
-        <Route path="/notes" element={<Notes />} />
-        <Route path="/edit-note/:id" element={<EditNote />} />
-        {/* Add any other routes as needed */}
+        <Route path="/notes" element={<CreateNote />} />
+        <Route path="/notelist" element={<NotesList />} />
+
+        <Route path="/notes/:id/edit" element={<EditNote />} />        {/* Add any other routes as needed */}
       </Routes>
     </Router>
   );

@@ -11,7 +11,8 @@ const Register = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.post('https://backendassign-59wq.onrender.com/api/auth/register', { email, password });
+   const  response =  await axios.post('https://backendassign-59wq.onrender.com/api/auth/register', { email, password });
+alert("created sucessfully")
       navigate('/login'); // navigate to the login page
     } catch (error) {
       console.error(error);
