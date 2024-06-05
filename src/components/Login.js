@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate,Link  } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 const Login = () => {
@@ -14,7 +14,7 @@ const Login = () => {
       const res = await axios.post('https://backendassign-59wq.onrender.com/api/auth/login', { email, password });
       alert("login sucess")
       localStorage.setItem('token', res.data.token);
-      navigate('/'); // navigate to the home page or any other route
+      navigate('/notelist'); 
     } catch (error) {
       console.error(error);
     }
@@ -56,6 +56,9 @@ const Login = () => {
                   <button type="submit" className="btn btn-primary">Login</button>
                 </div>
               </form>
+              <div className="mt-3 text-center">
+                <p>Don't have an account? <Link to="/register">Register here</Link></p>
+              </div>
             </div>
           </div>
         </div>
